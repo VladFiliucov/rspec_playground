@@ -1,0 +1,13 @@
+x = 'Lynda'
+
+x == 'Lynda'      # true
+x.eql?('Lynda')   # true
+x.equal?('Lynda') # false
+
+expect(x).to eq('Lynda')    # x == 'Lynda', most common
+expect(x).to be == 'Lynda'  # x == 'Lynda'
+
+expect(x).to eql('Lynda')   # x.eql?('Lynda')
+
+expect(x).to equal(1)       # x.equal?('Lynda'), rare
+expect(x).to be('Lynda')    # x.equal?('Lynda')
