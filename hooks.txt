@@ -1,0 +1,25 @@
+Hooks
+
+* DRY
+* Before Hooks
+* After Hooks
+* Around Hooks
+
+config.before(:suit) do
+  ...
+end
+
+before(:context) do       # alias before(:all)
+  ...
+end
+
+before(:example) do       # alias before(:each)
+  ...
+end
+
+
+around(:example) do |example|
+  puts "Code to execute before example"
+  example.run
+  puts "Code to execute after example"
+end
