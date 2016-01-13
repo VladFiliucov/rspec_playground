@@ -1,0 +1,16 @@
+***********************************
+
+let(:car) { Car.new }
+let(:subject) { Car.new }
+# this is so common that rspec provides a shortcut for this
+
+subject {Car.new}
+
+it "allows reading for :wheels" do
+  expect(subject.wheels).to eq(4)
+end
+
+just like let it can be eager executed with
+subject!
+
+# Subject's main goal is to make subject stand out.
