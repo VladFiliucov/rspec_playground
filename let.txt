@@ -1,0 +1,46 @@
+* READ AFTER HOOKS.TXT
+*********************************************
+
+before(:example) do
+ @car = Car.new
+end
+
+it "allows reading for :wheels" do
+  expect(@car.wheels).to eq(4)
+end
+
+# It will call before block before each test example in the current suit.
+# And we have to convert each local variable into instance var.
+
+# What we can do is
+*********************************************
+
+
+before(:context) do
+  def car
+    @car ||= Car.new   # if we already have car instance it will 
+                       # use it. In any other case it will create other
+  end
+end
+
+it "allows reading for :wheels" do
+  expect(car.wheels).to eq(4)
+end
+
+# Car is not a local variable anymore. Car is now a method.
+# This is terrible code. Instead we should use "let". And that's what it does
+
+***********************************************
+
+let(:car) { Car.new }
+# "let" creates a helper method, that takes one argument which is the name of the method.
+# and then it takes a block of code(that you want to put inside that method)
+
+it "allows reading for :wheels" do
+  expect(car.wheels).to eq(4)
+end
+
+
+let!(:car) { Car.new }
+# Regular let is "lazy executed"
+# let! is "eager executed" (it runs after it is defined)
