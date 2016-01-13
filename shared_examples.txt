@@ -1,0 +1,77 @@
+*************************************
+
+describe Product do
+  
+  it "has a position attribute" do
+    expect(subject).to respond_to(:position)
+  end
+
+  it "sorts positions lowest first by default"
+  it "assigns positions to new items"
+end
+************************************
+# We can move the example above to shared examples directory
+# So we could do something like this
+
+shared_examples_for('a sortable') do
+
+  it 'has a position attribute' do
+    expect(subject).to respond_to(:position)
+  end
+
+  it "sorts positions lowest first by default"
+  it "assigns positions to new items"
+end
+
+# So now when we have it declared
+# we can use it in our specs
+
+describe Product do
+  it_behaves_like 'a sortable'
+end
+
+# If we have an example we the same set of behavior,
+# we can include our shared example there to
+
+describe ProductImage do
+  it_behaves_like 'a sortable'
+end
+
+# We have to make our examples abstract enough, to use shared
+# examples.
+************************************
+
+shared_examples_for('a sortable') do
+
+  it "sorts positions lowest first by default" do
+    positions = collection.map(&:position)
+    expect(positions).to eq(positions.sort)
+  end
+end
+
+describe Product do
+  it_behaves_like 'a sortable' do
+    let(:collection) { Product.limit(5) }
+  end
+end
+
+describe ProductImage do
+  it_behaves_like 'a sortable' do
+    let(:collection) { ProductImage.limit(5) }
+  end
+end
+
+***************************************
+
+shared_examples_for('a sortable') do
+  let(:collection) { described_class.limit(5) }
+
+  it "sorts position lowest first by default" do
+    positions = collection.map(&:position)
+    expect(positions).to eq(positions.sort)
+  end
+end
+
+# by using "described_class" method we abstracted our
+# logic even more. This will work as long as class respondes
+# to limit(5) method.
