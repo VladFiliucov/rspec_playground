@@ -1,0 +1,17 @@
+describe 'Car'
+
+  subject { Car.new }
+
+  it "allows reading for :wheels" do
+    expect(subject.wheels).to eq(4)
+  end
+end
+
+# By specifing subject not as a string in describe,
+# we can use subject implicitly
+
+describe Car
+  it "allows reading for :wheels" do
+    expect(subject.wheels).to eq(4)
+  end
+end

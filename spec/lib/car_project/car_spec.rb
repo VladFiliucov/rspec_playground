@@ -1,11 +1,9 @@
 require "car"
 
-describe 'Car' do
+describe Car do
   
   describe 'attributes' do
 
-   subject { @car = Car.new }
-    
     it "allows reading and writing for :make" do
       subject.make = 'Test'
       expect(subject.make).to eq('Test')
