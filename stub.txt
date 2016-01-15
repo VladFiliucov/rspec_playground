@@ -1,0 +1,63 @@
+# Stub: an instruction to an object to return a specific response to a method call
+
+it "allows stubbin methods" do
+  dbl = double("Chant")
+  allow(dbl).to receive(:hey!)
+  expect(dbl).to respond_to(:hey!)
+end
+
+# It Creates a very simple object. A stand in that we can use.
+# When we use 'allow' we kind of defining a method for a mock object.
+# We are saying: Mock object! Pretend you have :hey! method defined
+# So stub allows dbl to respond to :hey!
+
+# We can set a return value from the method.
+# for example as a block
+
+it "allows setting responses" do
+  dbl = double("Chant")
+  allow(dbl).to receive(:hey!) {"Ho!"}
+  expect(dbl.hey!).to eq("Ho!")
+end
+
+# A stub is a fake method
+# Alt syntax
+
+it "allows setting responses" do
+  dbl = double("Chant")
+  allow(dbl).to
+    receive(:hey!).and_return("Ho!")
+  expect(dbl.hey!).to eq("Ho!")
+end
+
+it "allows setting responses" do
+  dbl = double("Person")
+  allow(dbl).to receive_messages(
+    :full_name => "Mary Smith",
+    :initials => "MTS"
+  )
+  expect(dbl.full_name).to eq("Mary Smith")
+  expect(dbl.initials).to eq("MTS")
+end
+
+# This example creates a double with stubs defined on it in one step
+
+it "allows setting responses" do
+  dbl = double("Person", :full_name => "Mary Smith", :initials => "MTS")
+  expect(dbl.full_name).to eq("Mary Smith")
+  expect(dbl.initials).to eq("MTS")
+end
+
+# We can program to series of responces
+
+it "allows setting multiple responses" do
+  die = double("Die")
+  allow(die).to receive(:roll).and_return(1, 5, 2, 6)
+  expect(die.roll).to eq(1)
+  expect(die.roll).to eq(5)
+  expect(die.roll).to eq(2)
+  expect(die.roll).to eq(6)
+  expect(die.roll).to eq(6)
+end
+
+
