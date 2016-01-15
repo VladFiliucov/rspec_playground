@@ -1,0 +1,44 @@
+# Here we are "allow". This means that if object will not
+# receive message :hey! it will not be complaining.
+
+it "allows setting responses" do
+  dbl = double("Chant")
+  allow(dbl).to receive(:hey!).and_return("Ho!")
+  expect(dbl.hey!).to eq("Ho!")
+end
+
+# In this example we expect the double to receive hey and
+# return "Ho!". If the message :hey! will not be sent
+# test will fail
+
+it "expects a call and allows a response" do
+  dbl = double("Chant")
+  expect(dbl).to receive(:hey!).and_return("Ho!")
+  dbl.hey!
+end
+
+# when we set few examples in expectation - order doesn't
+# matter.
+
+it "does not matter which order" do
+  dbl = double("Multi-step Process")
+
+  expect(dbl).to receive(:step_1)
+  exoect(dbl).to receive(:step_2)
+
+  dbl.step_1
+  dbl.step_2
+end
+
+# But we can make them pass only in specific order by calling
+# "order" method on our expectations.
+
+it "works with #ordered when order matters" do
+  dbl = double("Multi-steo Process")
+
+  expect(dbl).to receive(:step_1).ordered
+  expect(dbl).to receive(:step_2).ordered
+
+  dbl.step_1
+  dbl.step_2
+end
