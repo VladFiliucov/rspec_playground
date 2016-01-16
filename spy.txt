@@ -1,0 +1,73 @@
+it "exprects a call before it is received" do
+  dbl = double("Chant")
+  expect(dbl).to receive(:hey!).and_return("Ho!")
+  dbl.hey!
+end
+## spies keep record of messages sent to an object. so we can call :have_received
+
+it "expects a call after it is received" do
+  dbl = spy("Chant")
+  allow(dbl).to receive(:hey!).and_return("Ho!")
+  dbl.hey!
+  expect(dbl).to have_received(:hey!)
+end
+
+# we can call constraints on spies wo keep track of how many times methods
+# have been called
+
+it "expects a call after it is received" do
+  dbl = spy("Chant")
+  allow(dbl).to receive(:hey!).and_return("Ho!")
+  dbl.hey!
+  dbl.hey!
+  expect(dbl).to have_received(:hey!).twice
+end
+
+# you don't have to stub methods in order to make them avaliable
+
+it "expects a call after it is received" do
+  customer = spy("Custoemr")
+  # allow(customer).to receive(:send_invoice)
+  customer.send_invoice
+  expect(custoemr).to have_received(:send_invoice)
+end
+# spies are looser and they will let us send in any messages without sending any objections
+
+# you can spie with partial test doubles to
+
+it "expects a call after it is received" do
+  customer = Customer.new
+  allow(customer).to receive(:send_invoice)
+  customer.send_invoice
+  expect(customer).to have_received(:send_invoice)
+end
+# in the example above we are  creating real object and expecting it 
+# we don't declare a object being a spy.
+# but we have to provide a stub in order for object to be received
+
+# spies work better with "let" examples
+
+let(:order) do
+  spy("Order", :process_line_items => nil,
+    :charge_credit_card => true,
+    :send_email => true
+  )
+end
+
+before(:example) do
+  order.process_line_items
+  order.charge_credit_card
+  order.send_email
+end
+
+it "calls #process_line_items on the order" do
+  expect(order).to have_received(:process_line_items)
+end
+
+it "calls #charge_credit_card on the order" do
+  expect(order).to have_received(:charge_credit_card)
+end
+
+it "calls #send_email on the order" do
+  expect(order).to have_received(:send_email)
+end
