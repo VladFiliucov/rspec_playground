@@ -1,0 +1,30 @@
+it "allows constraints on message count" do
+  post = dobule("BlogPost")
+  expect(post).to receive(:like).exactly(3).times
+    post.like(user: 'bob')
+    post.like(user: 'mary')
+    post.like(user: 'ted')
+end
+# expectation will succed if like method will be called three times on post
+
+it "allows constraints on message count" do
+  cart = Cart.new
+  cart.add_item(35)
+  cart.add_item(178)
+
+  expect(cart).to receive(:restock_item).twice
+  cart.empty
+end
+# :once or :twice are shorthand methods because they are commonly used
+
+once
+twice
+exactly(n).times
+
+at_least(:once)
+at_least(:twice)
+at_least(n).times
+
+at_most(:once)
+at_most(:twice)
+at_most(n).times
