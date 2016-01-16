@@ -1,0 +1,26 @@
+it "allows constraints on arguments" do
+  dbl = double("Customer list")
+  expect(dbl).to receive(:sort).with("name")
+  dbl.sort("name")
+end
+
+it "allows constraints on arguments" do
+  dbl = double("Customer List")
+  expect(dbl).to receive(:sort).with(any_args)
+  dbl.sort("name")
+end
+# if we don't specify argument to with value for receive the default will be "any_args"
+# "any_args" is default matcher that will be sent in
+# expect(dbl).to receive(:sort)
+# expect(dbl).to receive(:sort).with(any_args)
+#
+with(any_args)
+with(no_args)
+with("string")
+with("string", 1234, true, [:a, :b, :c])
+with("string", anything)
+with(boolean)
+with(hash_including(verbose: true))
+with(array_including('blue'))
+with(a_multiple_of(3))
+with( << any matcher >>)
